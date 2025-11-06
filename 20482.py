@@ -4,13 +4,15 @@ from tabulate import tabulate
 import random
 import numpy
 
-# Set up terminal interface
+# Set up terminal interface 
 table = numpy.array([
-        [0,0,0,0],
-        [0,0,0,0],
-        [0,0,0,0],
+        [2,4,8,16],
+        [32,64,128,256],
+        [512,1024,2048,0],
         [0,0,0,0]
     ])
+
+
 
 firstTurn = True
 playerLost = False
@@ -18,8 +20,8 @@ playerLost = False
 while playerLost == False:
     # Change row X, column Y to 2
     def genTwo(coord1, coord2):
-        possible = [2,2,2,2,4]
-        num = random.choice(possible)
+        ranNumb = [2,2,2,2,4]
+        num = random.choice(ranNumb)
         table[coord1][coord2] = num
 
     # Criar nested list com valores das coordenadas disponiveis, chamar table[coord1][coord2] = 2
@@ -44,10 +46,14 @@ while playerLost == False:
 
     # Select random coordinate from avCoordsList and call genTwo with the chosen coordinate
     def ranCoord():
+
+
         global playerLost
         if not avCoordsList:
             print("\033[91mNO POSITIONS AVAILABLE! PLAYER LOST!\033[0m")
             playerLost = True
+
+            
         else:
             # Get random coordinate from avCoordsList
             rdmCoord = random.choice(avCoordsList)
@@ -58,18 +64,17 @@ while playerLost == False:
 
     def color_tile(value):
         colors = {
-            0: "\033[90m",    # Gray
             2: "\033[97m",    # White
             4: "\033[96m",    # Cyan
             8: "\033[94m",    # Blue
             16: "\033[92m",   # Green
-            32: "\033[33m",   # Green
+            32: "\033[33m",   # Yellow
             64: "\033[91m",   # Red
             128: "\033[95m",  # Pink
-            256: "\033[93m",   # Green
-            512: "\033[31m",  # Red
+            256: "\033[90m",  # Gray
+            512: "\033[31m",  # Maroon
             1024: "\033[35m", # Purple
-            2048: "\033[93m", # Green
+            2048: "\033[94m", # Blue
         }
         reset = "\033[0m"
         color = colors.get(value, "\033[97m")  # Default to white
@@ -157,9 +162,12 @@ while playerLost == False:
         for s in table:
             for t in s:
                 score += t
+
         
         coloredTable = [[color_tile(cell) for cell in row] for row in table]
         print(tabulate(coloredTable, tablefmt="double_grid"))
+
+
         print("Score:", score)
         
     elif dirInput == "break":
