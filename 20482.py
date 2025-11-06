@@ -148,8 +148,8 @@ while playerLost == False:
         firstTurn = False
 
     dirInput = input("\033[95mDirection (W, A, S, D):\033[0m")
-    if dirInput in ("w","a","s","d","W","A","S","D"):
-        dirInput.lower()
+    dirInput.lower()
+    if dirInput in ("w","a","s","d"):
         move(dirInput)
         isCoordAv()
 
@@ -161,6 +161,7 @@ while playerLost == False:
         coloredTable = [[color_tile(cell) for cell in row] for row in table]
         print(tabulate(coloredTable, tablefmt="double_grid"))
         print("Score:", score)
+        
     elif dirInput == "break":
         playerLost = True
     else:
