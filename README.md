@@ -1,5 +1,5 @@
 # 2048
-This is a project for my _Intro to Computer Science_ class at FGCU.
+This is a project for my _Intro to Computer Science_ class at FGCU.  
 It is based off the popular puzzle game [2048](https://play2048.co/) and designed to run entirely in the terminal using Python.
 
 # Features
@@ -9,12 +9,12 @@ It is based off the popular puzzle game [2048](https://play2048.co/) and designe
 - Terminal display coloring
 
 # Game Logic Overview
-Movements are handled by:
-Rotating the grid with numpy.rot90
-Reversing rows when needed
-Compacting tiles left → merging → padding with zeros
+Movements are handled by:  
+Rotating the grid with numpy.rot90 to move up/ down  
+Reversing rows to move right/ down  
+Compacting tiles left → merging → filling with zeros
 
-After each move:
+After each move:  
 A check scans for open coordinates.
 A new tile (2 or 4) spawns.
 Score is recalculated as the sum of all tile values.
