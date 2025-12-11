@@ -21,8 +21,8 @@ Score is recalculated as the sum of all tile values.
 
 # Used tools
 - Python 3
-- [NumPy](https://numpy.org/) library
-- [Tabulate](https://pypi.org/project/tabulate/) library
+- [NumPy](https://numpy.org/)  
+- [Tabulate](https://pypi.org/project/tabulate/)  
 
 # License
-This project is made for educational purposes. Modify or build upon it as needed.
+MIT.
