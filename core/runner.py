@@ -1,32 +1,41 @@
 from core import gamestate, generation, movement
 
+score = 0
 # Using parameter as function to render gamestate.table diff nmethods
-def gameplay(renderer):
-    while not gamestate.playerLost:
-        if gamestate.firstTurn:
-            generation.isCoordAv(2)
+def gameplay(renderer, controller, root=None):
+    global score
+    if gamestate.playerLost:
+        return
+    if gamestate.firstTurn:
+        generation.isCoordAv(2)
 
-            # Print in terminal/ update ui
-            renderer()
-            
-            gamestate.firstTurn = False
+        # Call to update ui/ terminal interface
+        renderer()
+        
+        gamestate.firstTurn = False
 
-        dirInput = input("\033[95mDirection (W, A, S, D):\033[0m").strip().lower()
+    # Get input from current used runner
+    dirInput = controller()
 
-        if dirInput in ("w","a","s","d"):
-            movement.move(dirInput)
-            generation.isCoordAv()
+    if dirInput in ("w","a","s","d"):
+        movement.move(dirInput)
+        generation.isCoordAv()
 
-            score = 0
-            for s in gamestate.table:
-                for t in s:
-                    score += t
+        score = 0
+        for s in gamestate.table:
+            for t in s:
+                score += t
 
-            renderer()
+        renderer()
 
-            print("Score:", score)
-            
-        elif dirInput == "break":
-            break
-        else:
-            print("Invalid Input. Use WASD / wasd")
+    elif dirInput == "break":
+        return
+
+    if root:
+        # After 100ms, call gameplay(renderer, controller, root)
+        root.after(100, gameplay, renderer, controller, root)
+
+    else:
+        # Call gameplay(renderer, controller)
+        if not gamestate.playerLost:
+            gameplay(renderer, controller)
