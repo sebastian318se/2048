@@ -1,5 +1,4 @@
-# Import tabulate for cleaner terminal interface // random for coordinate generating
-# Import numpy for transposition and reversing list (simplify movement)
+# Original game file. 
 from tabulate import tabulate
 import random
 import numpy
@@ -12,19 +11,16 @@ table = numpy.array([
         [0,0,0,0]
     ])
 
-
-
 firstTurn = True
 playerLost = False
 
 while playerLost == False:
-    # Change row X, column Y to 2
+    # Change row X, column Y to 2/4
     def genTwo(coord1, coord2):
         ranNumb = [2,2,2,2,4]
         num = random.choice(ranNumb)
         table[coord1][coord2] = num
 
-    # Criar nested list com valores das coordenadas disponiveis, chamar table[coord1][coord2] = 2
     avCoordsList = []
 
     # Add available coordinate values to nested list; call ranCoord()
@@ -58,7 +54,6 @@ while playerLost == False:
             # Get random coordinate from avCoordsList
             rdmCoord = random.choice(avCoordsList)
             # Call genTwo function with chosen coordinate
-                # Very important: using * as an unpacking operator to get both coordinates from list pos
             genTwo(*rdmCoord)
             avCoordsList.clear()
 
@@ -80,6 +75,7 @@ while playerLost == False:
         color = colors.get(value, "\033[97m")  # Default to white
         return f"{color}{value if value != 0 else '.'}{reset}"
 
+
     def move(direction):
         global table
         
@@ -88,7 +84,7 @@ while playerLost == False:
         reverse = False
 
         if direction == "w":
-            # rot90(ARRAY, number of times flipped COUNTER CLOCKWISE)
+            # rot90(ARRAY, number of times flipped counter clockwise)
             grid = numpy.rot90(table)
             rotated += 1
             
@@ -124,12 +120,10 @@ while playerLost == False:
                     # Delete added row
                     del row[i + 1]
                     # Move to the next index
-                    i += 1 # Make sure not to fully add the lines (2,2,4 should NOT = 8, should be (4,4))
-
-                else:
+                    i += 1
                     i += 1
 
-        # Fill each row with zeroes to get it back to make it complete length again
+        # Fill each row with zeroes 
         for row in newlist:
             while len(row) < 4:
                 row.append(0)
