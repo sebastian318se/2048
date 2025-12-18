@@ -14,7 +14,6 @@ label.pack()
 gameframe = tkinter.Frame(root, bg= "navajowhite3", padx = 5, pady = 5)
 gameframe.place(x=325, y=300, anchor = "center")
 
-
 last_key = None
 
 def get_color(value):
@@ -32,7 +31,7 @@ def get_color(value):
         1024: "gold2",
         2048: "goldenrod1"
     }
-    return colors.get(value, "bisque") # Get color if not 0
+    return colors.get(value, "bisque")
 
 
 for row in gamestate.table:
@@ -71,19 +70,8 @@ def on_key(event):
     if event.keysym in ("w","a","s","d"):
         last_key = event.keysym.lower()
 
-
 # Calls on_key to save last_key
 root.bind('<Key>', on_key)
 
-
-
-
 runner.gameplay(ui_render, ui_controller, root)
 root.mainloop()
-
-
-
-# To break, exit button making condition true?
-
-
-
