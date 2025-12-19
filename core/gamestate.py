@@ -10,6 +10,13 @@ table = numpy.array([
         [0,0,0,0]
     ])
 
+def get_score():
+    score = 0
+    for row in table:
+        for cell in row:
+            score += cell
+    return score
+
 def color_tile(value):
         colors = {
             2: "\033[97m",    # White
@@ -27,3 +34,14 @@ def color_tile(value):
         reset = "\033[0m"
         color = colors.get(value, "\033[97m")  # Default to white
         return f"{color}{value if value != 0 else '.'}{reset}"
+
+def clear_table():
+    global table
+    y, x = 0, 0
+    for row in table:
+        for item in row:
+            table[y][x] = 0
+            x += 1
+            if x >= 4:
+                x = 0
+        y += 1

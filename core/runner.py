@@ -21,11 +21,6 @@ def gameplay(renderer, controller, root=None):
         movement.move(dirInput)
         generation.isCoordAv()
 
-        score = 0
-        for s in gamestate.table:
-            for t in s:
-                score += t
-
         renderer()
 
     elif dirInput == "break":
