@@ -1,6 +1,7 @@
 from core import gamestate, generation, movement
 
 score = 0
+
 # Using parameter as function to render gamestate.table diff nmethods
 def gameplay(renderer, controller, root=None):
     global score
@@ -27,7 +28,7 @@ def gameplay(renderer, controller, root=None):
         return
 
     if root:
-        # After 100ms, call gameplay(renderer, controller, root)
+        # After 100ms, call gameplay(renderer, controller, root) as game_loop_id n(if player loses, cancel scheduled afters)
         root.after(100, gameplay, renderer, controller, root)
 
     else:

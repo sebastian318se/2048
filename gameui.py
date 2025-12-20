@@ -11,11 +11,16 @@ root.configure(bg="bisque")
 
 
 def new_game():
-    gamestate.clear_table()
-    gamestate.playerLost = False
-    generation.isCoordAv(2)
-    ui_render()
-    runner.gameplay(ui_render, ui_controller, root)
+    gamestate.clear_table(gamestate.table)
+    gamestate.playerLost = False # Re-enable movement
+    try:
+        headers.del_lose_screen()
+        generation.isCoordAv() # Generate 1 tile - game loss = round already running (1 tile gen. per round)
+    except NameError:
+        generation.isCoordAv(2) # Generate 2 tiles - new round
+    finally:
+        ui_render()
+        runner.gameplay(ui_render, ui_controller, root) # Change later not to call this multiple times.
     
 def exit_game():
     root.destroy()
@@ -30,6 +35,10 @@ gameframe.place(x = 300, y = 325, anchor = "center")
 last_key = None
 
 def ui_render():
+    
+    if gamestate.playerLost:
+        headers.lose_screen(root)
+
     headers.update_score(root, gamestate.get_score())
 
     for widget in gameframe.winfo_children():

@@ -35,13 +35,8 @@ def color_tile(value):
         color = colors.get(value, "\033[97m")  # Default to white
         return f"{color}{value if value != 0 else '.'}{reset}"
 
-def clear_table():
-    global table
+def clear_table(table):
     y, x = 0, 0
-    for row in table:
-        for item in row:
-            table[y][x] = 0
-            x += 1
-            if x >= 4:
-                x = 0
-        y += 1
+    for y in range(len(table)):
+         for x in range(len(table)):
+              table[y][x] = 0
