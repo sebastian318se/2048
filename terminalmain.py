@@ -11,14 +11,3 @@ def terminal_controller():
 
 # controller() = input handling; render() = retrieve + print table changes
 runner.gameplay(terminal_render, terminal_controller)
-
-"""        
-print("Score:", score)
-        
-    elif dirInput == "break":
-        break
-    elif dirInput == None:
-        pass
-    else:
-        print("Invalid Input. Use WASD / wasd")
-"""
