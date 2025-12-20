@@ -1,5 +1,4 @@
 import tkinter
-# Make into display?
 
 def game_label(root):
     gameLabel = tkinter.Label(
