@@ -40,3 +40,25 @@ def clear_table(table):
     for y in range(len(table)):
          for x in range(len(table)):
               table[y][x] = 0
+
+def noMerges(table):
+
+    def mergeCheckEqual(row):
+        for i in range(len(row) - 1):
+            # Return true for any match within the row
+            if row[i] == row[i + 1]:
+                return True
+        
+    for row in table:
+        if mergeCheckEqual(row) == True:
+            # Return true for any match within any of the rows            
+            return True
+        
+    # Repeat process for vertical matches
+    rotated_table = numpy.rot90(table)
+
+    for row in rotated_table:
+        if mergeCheckEqual(row) == True:
+            return True
+        
+    return False

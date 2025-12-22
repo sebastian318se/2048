@@ -4,7 +4,7 @@ from ui import headers, control, getgameframe
 
 root = tkinter.Tk()
 
-root.geometry("750x700")
+root.geometry("600x700")
 root.title("2048")
 
 root.configure(bg="bisque")
@@ -62,3 +62,7 @@ def on_key(event):
 root.bind('<Key>', on_key)
 runner.gameplay(ui_render, ui_controller, root)
 root.mainloop()
+
+# Final updates to make:
+# Check if no av coords AND no av merges for player lost - done
+# Optimization w/ bug fix - don't call gameplay multiple times

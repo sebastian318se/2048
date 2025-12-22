@@ -28,15 +28,19 @@ def isCoordAv(count = 1):
 
 # Select random coordinate from avCoordsList and call genTwo
 def ranCoord():
-    if not avCoordsList:
-        print("\033[91mNO POSITIONS AVAILABLE! PLAYER LOST!\033[0m")
-        gamestate.playerLost = True
+    try:
+        if not avCoordsList and gamestate.noMerges(gamestate.table) == False:
+            gamestate.playerLost = True
+
+        else:
+            # Get random coordinate from avCoordsList
+            rdmCoord = random.choice(avCoordsList)
+            # Call genTwo function with chosen coordinate
+            genTwo(*rdmCoord)
+            avCoordsList.clear()
+    except IndexError:
+        # Don't do anything if no available tiles and player inputs invalid move.
+        pass
 
         
-    else:
-        # Get random coordinate from avCoordsList
-        rdmCoord = random.choice(avCoordsList)
-        # Call genTwo function with chosen coordinate
-            # Very important: using * as an unpacking operator to get both coordinates from list pos
-        genTwo(*rdmCoord)
-        avCoordsList.clear()
+    

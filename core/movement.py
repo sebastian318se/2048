@@ -27,6 +27,7 @@ def move(direction):
             tempList = []
 
             for item in row:
+                # New list per row ignoring all zeroes
                 if item != 0:
                     tempList.append(int(item))
 
