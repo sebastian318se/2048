@@ -9,19 +9,29 @@ root.title("2048")
 
 root.configure(bg="bisque")
 
-
 def new_game():
+    # if last game was a loss, generate 1. Else, generate 2 (using firstTurn)
+    if runner.game_loop_id is not None:
+        root.after_cancel(runner.game_loop_id)
+        runner.game_loop_id = None
+
     gamestate.clear_table(gamestate.table)
-    gamestate.playerLost = False # Re-enable movement
+
     try:
         headers.del_lose_screen()
-        generation.isCoordAv() # Generate 1 tile - game loss = round already running (1 tile gen. per round)
     except NameError:
-        generation.isCoordAv(2) # Generate 2 tiles - new round
+        pass
     finally:
-        ui_render()
-        runner.gameplay(ui_render, ui_controller, root) # Change later not to call this multiple times.
-    
+        if gamestate.playerLost:
+            # Generate w/o making first turn false
+            gamestate.firstTurnAfterLoss = True
+            gamestate.playerLost = False # Re-enable movement
+            runner.gameplay(ui_render, ui_controller, root)
+        else:
+            gamestate.firstTurn = True
+            gamestate.playerLost = False # Re-enable movement
+            runner.gameplay(ui_render, ui_controller, root)
+            
 def exit_game():
     root.destroy()
 
@@ -60,7 +70,7 @@ def on_key(event):
 
 # Calls on_key to save last_key
 root.bind('<Key>', on_key)
-runner.gameplay(ui_render, ui_controller, root)
+runner.game_loop_id = runner.gameplay(ui_render, ui_controller, root)
 root.mainloop()
 
 # Final updates to make:

@@ -3,6 +3,9 @@ import core.gamestate as gamestate
 
 def move(direction):
         
+        # Check if moved and rerturn true or false
+        moved = False
+
         grid = gamestate.table
         rotated =  0
         reverse = False
@@ -50,7 +53,7 @@ def move(direction):
                 else:
                     i += 1
 
-        # Fill each row with zeroes
+        # Reset table
         for row in newlist:
             while len(row) < 4:
                 row.append(0)
@@ -65,4 +68,10 @@ def move(direction):
         if reverse:
             grid = [row[::-1] for row in grid]
 
-        gamestate.table = grid
+        # Check if movement happened
+        if numpy.array_equal(gamestate.table, grid):
+            pass
+        else:
+            gamestate.table = grid
+            moved = True
+        return moved

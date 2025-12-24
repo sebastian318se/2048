@@ -1,6 +1,7 @@
 import numpy
 
 firstTurn = True
+firstTurnAfterLoss = False
 playerLost = False
 
 table = numpy.array([
