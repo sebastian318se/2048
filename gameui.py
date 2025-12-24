@@ -72,7 +72,3 @@ def on_key(event):
 root.bind('<Key>', on_key)
 runner.game_loop_id = runner.gameplay(ui_render, ui_controller, root)
 root.mainloop()
-
-# Final updates to make:
-# Check if no av coords AND no av merges for player lost - done
-# Optimization w/ bug fix - don't call gameplay multiple times
