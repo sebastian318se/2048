@@ -1,6 +1,7 @@
 import tkinter
-from core import gamestate, runner, generation
+from core import gamestate, runner
 from ui import headers, control, getgameframe
+from ai import posEvaluation
 
 root = tkinter.Tk()
 
@@ -45,7 +46,9 @@ gameframe.place(x = 300, y = 325, anchor = "center")
 last_key = None
 
 def ui_render():
-    
+
+    print(posEvaluation.tileEval(gamestate.table))
+
     if gamestate.playerLost:
         headers.lose_screen(root)
 
