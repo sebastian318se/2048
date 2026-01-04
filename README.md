@@ -3,7 +3,7 @@ This is was a project for my _Intro to Computer Science_ class at FGCU.
 It is based off the popular game [2048](https://play2048.co/) and designed to run entirely in the terminal using Python.
 
 # Features
-- 2048 clone  
+- 2048 game clone  
 - tkinter UI
 - Expectimax AI using heuristics
 
