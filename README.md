@@ -1,12 +1,11 @@
 # 2048
-This is a project for my _Intro to Computer Science_ class at FGCU.  
-It is based off the popular puzzle game [2048](https://play2048.co/) and designed to run entirely in the terminal using Python.
+This is was a project for my _Intro to Computer Science_ class at FGCU.  
+It is based off the popular game [2048](https://play2048.co/) and designed to run entirely in the terminal using Python.
 
 # Features
-- Random coordinate generation from available slots
-- Movement system built with array transformation for optimized logic
-- Scoring system
-- Terminal display coloring
+- 2048 clone  
+- tkinter UI
+- Expectimax AI using heuristics
 
 # Game Logic Overview
 Movements are handled by:  
