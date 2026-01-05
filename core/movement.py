@@ -1,18 +1,21 @@
 import numpy
-import core.gamestate as gamestate
+from core import gamestate
 
-def move(direction):
+def move(direction, table = None):
         
+        # Assign gamestate.table if this is being run from the game and not evaluator
+        if table is None:
+            table = gamestate.table
         # Check if moved and rerturn true or false
         moved = False
 
-        grid = gamestate.table
+        grid = table
         rotated =  0
         reverse = False
 
         if direction == "w":
             # rot90(ARRAY, number of times flipped counter clockwise)
-            grid = numpy.rot90(gamestate.table)
+            grid = numpy.rot90(table)
             rotated += 1
             
         if direction == "d":
@@ -21,7 +24,7 @@ def move(direction):
             reverse = True
 
         if direction == "s":
-            grid = numpy.rot90(gamestate.table, k=-1)
+            grid = numpy.rot90(table, k=-1)
             rotated -= 1
 
         newlist = []
@@ -69,9 +72,10 @@ def move(direction):
             grid = [row[::-1] for row in grid]
 
         # Check if movement happened
-        if numpy.array_equal(gamestate.table, grid):
-            pass
-        else:
-            gamestate.table = grid
+        if not numpy.array_equal(table, grid):
+            for r in range(4):
+                for c in range(4):
+                    # Update table to be the same as grid
+                    table[r][c] = grid [r][c]
             moved = True
         return moved

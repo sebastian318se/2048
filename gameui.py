@@ -1,7 +1,7 @@
 import tkinter
 from core import gamestate, runner
 from ui import headers, control, getgameframe
-from ai import posEvaluation
+import gameai
 
 root = tkinter.Tk()
 
@@ -47,7 +47,7 @@ last_key = None
 
 def ui_render():
 
-    print(posEvaluation.tileEval(gamestate.table))
+    gameai.chooseDirection()
 
     if gamestate.playerLost:
         headers.lose_screen(root)

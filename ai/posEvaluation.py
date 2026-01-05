@@ -57,7 +57,7 @@ def tileEval(table):
 
             # Award empty tiles
             if tileData == 0:
-                evalScore += 512
+                evalScore += 1024
             
             # Award if biggest tile is in bottom left corner
             # TODO address equal values as biggest
@@ -66,6 +66,6 @@ def tileEval(table):
                 biggestTilePos = [row, tile]
 
     if biggestTilePos == desiredPos:
-        evalScore += 4096
+        evalScore *= 2
 
     return evalScore
