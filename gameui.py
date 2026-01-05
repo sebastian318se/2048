@@ -47,7 +47,7 @@ last_key = None
 
 def ui_render():
 
-    gameai.chooseDirection()
+    gameai.maxNode()
 
     if gamestate.playerLost:
         headers.lose_screen(root)

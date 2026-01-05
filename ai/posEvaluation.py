@@ -1,6 +1,6 @@
 from math import log2
 
-def tileEval(table):
+def posEval(table):
     evalScore = 0
     # Assign desired corner to bottom left
     desiredPos = [3, 0]
@@ -9,6 +9,8 @@ def tileEval(table):
 
     weightScore = []
     weightEval = 0
+
+    emptyTileList = []
     # Multiplicator for weight eval on each tile
     weighedTable = [
         [4, 2, 1, 0],
@@ -57,6 +59,8 @@ def tileEval(table):
 
             # Award empty tiles
             if tileData == 0:
+                # Fetch all empty tiles on table
+                emptyTileList.append([row, tile])
                 evalScore += 1024
             
             # Award if biggest tile is in bottom left corner
@@ -68,4 +72,5 @@ def tileEval(table):
     if biggestTilePos == desiredPos:
         evalScore *= 2
 
-    return evalScore
+    return evalScore, emptyTileList
+        
