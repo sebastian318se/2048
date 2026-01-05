@@ -1,6 +1,6 @@
 # 2048
 This is was originally a project for my _Intro to Computer Science_ class in college. 
-It is based off the popular game [2048](https://play2048.co/), with the later implementation of a GUI and AI playing system.
+It is based off the popular game [2048](https://play2048.co/), with the implementation of a GUI and Expectimax AI system.
 
 # Features
 - 2048 game clone  
