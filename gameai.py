@@ -1,33 +1,73 @@
 from core import gamestate, movement, generation
 from ai import posEvaluation
 
+# TODO:
+"""
+Penalize player loss (if no move is made on MAX node)
+Implement getEmptyTiles to evaluate CHANCE nodes
+Implement movement (with rendering) for AI in the gameui code
+"""
 
-def maxNode():
-    global searchTable
-    searchTable = gamestate.table.copy()
-    highestEval = 0
-    highestDirection = ""
+def getEmptyTiles(table):
+    pass
 
-    # Calculate eval for each direction
-    for direction in ("w","a","s","d"):
-        if movement.move(direction, searchTable):
-            currentEval, emptyTiles = posEvaluation.posEval(searchTable)
-            print(direction, currentEval)
+class Node:
+    def __init__(self, table, depth, nodeType, children, probability):
+        self.table = table
+        self.depth = depth
+        self.nodeType = nodeType
+        self.children = children
+        self.probability = probability
 
-            if currentEval > highestEval:
-                highestEval = currentEval
-                highestDirection = direction
+    def expand(self):
+        if self.depth == 0:
+            return
+        
+        # Execute every move available
+        if self.nodeType == "MAX":
+            for direction in ("w","a","s","d"):
+                newTable = self.table.copy()
+                # Check if movements are available
+                if movement.move(direction, newTable):
+                    # Create a child for each move executed
+                    child = Node(
+                        table = newTable,
+                        depth = self.depth - 1,
+                        nodeType = "CHANCE",
+                        children = [],
+                        probability = 1.0
+                    )
+                    self.children.append(child)
 
-            chanceNode(emptyTiles)
-            # Unmove
-            searchTable = gamestate.table.copy()
+        # Run all possible tile spawns
+        elif self.nodeType == "CHANCE":
+            emptyTiles = getEmptyTiles(self.table)
+            for (x, y) in emptyTiles:
+                for value, probEval in [(2, 0.9), (4, 0.1)]:
+                    newTable = self.table.copy()
+                    newTable[x][y] = value
+                    # Create new child for each spawn executed
+                    child = Node(
+                        table = newTable,
+                        depth = self.depth - 1,
+                        nodeType = "MAX",
+                        children = [],
+                        # Store 0.9 and 0.1 as multipliers for node evaluation
+                        probability = probEval
+                    )
+                    self.children.append(child)
 
-    print("Best", highestDirection, highestEval)
-
-def chanceNode(emptyTiles):
-    # Make new generator function to generare a full node (all possibilities) for each direction moved
-    # Eval recursively, with range budget
-
-    # !! This is getting the values of the table after a move w/o considering generation after
-    global searchTable
-    print("Empty tiles:", emptyTiles)
+    def evaluate(self):
+        # Leaf node
+        if self.depth == 0 or not self.children:
+            score = posEvaluation.posEval(self.table)
+            return score
+        
+        # Evaluate nodes individually going up the tree after leas are done
+        # MAX node
+        if self.nodeType == "MAX":
+            return max(child.evaluate() for child in self.children)
+        
+        # CHANCE node
+        if self.nodeType == "CHANCE":
+            return sum(child.evaluate() * child.probability for child in self.children)

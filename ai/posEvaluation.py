@@ -10,7 +10,6 @@ def posEval(table):
     weightScore = []
     weightEval = 0
 
-    emptyTileList = []
     # Multiplicator for weight eval on each tile
     weighedTable = [
         [4, 2, 1, 0],
@@ -59,8 +58,6 @@ def posEval(table):
 
             # Award empty tiles
             if tileData == 0:
-                # Fetch all empty tiles on table
-                emptyTileList.append([row, tile])
                 evalScore += 1024
             
             # Award if biggest tile is in bottom left corner
@@ -72,5 +69,5 @@ def posEval(table):
     if biggestTilePos == desiredPos:
         evalScore *= 2
 
-    return evalScore, emptyTileList
+    return evalScore
         

@@ -2,6 +2,7 @@ import tkinter
 from core import gamestate, runner
 from ui import headers, control, getgameframe
 import gameai
+from ai import posEvaluation
 
 root = tkinter.Tk()
 
@@ -47,7 +48,18 @@ last_key = None
 
 def ui_render():
 
-    gameai.maxNode()
+    rootNode = gameai.Node(
+        table = gamestate.table.copy(),
+        depth = 10,
+        nodeType = "MAX",
+        children = [],
+        probability = 1.0
+    )
+
+    rootNode.expand()
+    print("here",rootNode.evaluate())
+    print("here2", posEvaluation.posEval(gamestate.table))
+    
 
     if gamestate.playerLost:
         headers.lose_screen(root)
