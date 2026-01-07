@@ -3,9 +3,7 @@ from ai import posEvaluation
 
 # TODO:
 """
-AI is running too fast and not allowing the UI to render.
-Separate ai from ui_render and make a separate runner for it
-Penalize player loss (if no move is made on MAX node)
+Penalize player loss in eval(if no move is made on MAX node)
 """
 
 def getEmptyTiles(table):

@@ -1,5 +1,5 @@
 from core import gamestate, generation, movement
-
+import time
 score = 0
 
 game_loop_id = None
@@ -18,7 +18,6 @@ def gameplay(renderer, controller, root=None):
 
         # Get input from current runner
         dirInput = controller()
-
         if dirInput in ("w","a","s","d"):
             hasMoved = movement.move(dirInput)
             

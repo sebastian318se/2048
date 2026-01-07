@@ -32,9 +32,9 @@ def posEval(table):
                     horizLogFoldChange = abs(log2(table[row][tile]) - (log2(table[row][tile + 1])))
 
                 if horizLogFoldChange >= 6:
-                    evalScore -= 2048
+                    evalScore = evalScore - (evalScore / 4)
                 elif horizLogFoldChange >= 3:
-                    evalScore -= 256
+                    evalScore = evalScore - (evalScore / 8)
 
                 # Repeat check vertically
                 if table[row][tile] and table[row + 1][tile]:
@@ -42,9 +42,9 @@ def posEval(table):
                         vertLogFoldChange = abs(log2(table[row][tile]) - (log2(table[row + 1][tile])))
 
                 if vertLogFoldChange >= 6:
-                    evalScore -= 2048
+                    evalScore = evalScore - (evalScore / 4)
                 elif vertLogFoldChange >= 3:
-                    evalScore -= 256
+                    evalScore = evalScore - (evalScore / 8)
 
             except IndexError:
                 pass
@@ -58,7 +58,7 @@ def posEval(table):
 
             # Award empty tiles
             if tileData == 0:
-                evalScore += 1024
+                evalScore = evalScore + (evalScore * 1.05)
             
             # Award if biggest tile is in bottom left corner
             # TODO address equal values as biggest
