@@ -3,19 +3,25 @@ from ai import posEvaluation
 
 # TODO:
 """
+AI is running too fast and not allowing the UI to render.
+Separate ai from ui_render and make a separate runner for it
 Penalize player loss (if no move is made on MAX node)
-Implement getEmptyTiles to evaluate CHANCE nodes
-Implement movement (with rendering) for AI in the gameui code
 """
 
 def getEmptyTiles(table):
-    pass
+    emptyTiles = []
+    for row, rowData in enumerate(table):
+        for tile, tileData in enumerate(rowData):
+            if tile == 0:
+                emptyTiles.append([row, tile])
+    return emptyTiles
 
 class Node:
-    def __init__(self, table, depth, nodeType, children, probability):
+    def __init__(self, table, depth, nodeType, moveDirection, children, probability):
         self.table = table
         self.depth = depth
         self.nodeType = nodeType
+        self.moveDirection = moveDirection
         self.children = children
         self.probability = probability
 
@@ -34,13 +40,15 @@ class Node:
                         table = newTable,
                         depth = self.depth - 1,
                         nodeType = "CHANCE",
+                        moveDirection = direction,
                         children = [],
                         probability = 1.0
                     )
                     self.children.append(child)
+                    child.expand()
 
         # Run all possible tile spawns
-        elif self.nodeType == "CHANCE":
+        if self.nodeType == "CHANCE":
             emptyTiles = getEmptyTiles(self.table)
             for (x, y) in emptyTiles:
                 for value, probEval in [(2, 0.9), (4, 0.1)]:
@@ -51,11 +59,13 @@ class Node:
                         table = newTable,
                         depth = self.depth - 1,
                         nodeType = "MAX",
+                        moveDirection = "a",
                         children = [],
                         # Store 0.9 and 0.1 as multipliers for node evaluation
                         probability = probEval
                     )
                     self.children.append(child)
+                    child.expand()
 
     def evaluate(self):
         # Leaf node
@@ -67,7 +77,8 @@ class Node:
         # MAX node
         if self.nodeType == "MAX":
             return max(child.evaluate() for child in self.children)
-        
+
         # CHANCE node
         if self.nodeType == "CHANCE":
+            # Calculate evaluation of nodes wheighed by probability
             return sum(child.evaluate() * child.probability for child in self.children)

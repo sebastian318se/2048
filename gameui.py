@@ -1,8 +1,8 @@
 import tkinter
-from core import gamestate, runner
+from core import gamestate, runner, movement
 from ui import headers, control, getgameframe
 import gameai
-from ai import posEvaluation
+import time
 
 root = tkinter.Tk()
 
@@ -47,22 +47,38 @@ gameframe.place(x = 300, y = 325, anchor = "center")
 last_key = None
 
 def ui_render():
-
+    global ai_key
     rootNode = gameai.Node(
         table = gamestate.table.copy(),
-        depth = 10,
+        depth = 3,
         nodeType = "MAX",
+        moveDirection = "",
         children = [],
         probability = 1.0
     )
 
     rootNode.expand()
-    print("here",rootNode.evaluate())
-    print("here2", posEvaluation.posEval(gamestate.table))
-    
+
+    bestMove = None
+    bestDirection = None
+    maxEval = -float('inf')
+
+    for child in rootNode.children:
+        evalScore = child.evaluate()
+
+        if evalScore > maxEval:
+            maxEval = evalScore
+            bestMoveTable = child.table
+            bestDirection = child.moveDirection
+
+    if bestMoveTable is not None:
+        print("bababooey")
+        gamestate.table = bestMoveTable
+        ai_key = bestDirection
 
     if gamestate.playerLost:
         headers.lose_screen(root)
+    
 
     headers.update_score(root, gamestate.get_score())
 
@@ -71,11 +87,19 @@ def ui_render():
 
     getgameframe.draw_grid(gameframe, gamestate.table)
 
+    # Add delay before running (time for ui to update)
+    root.after(500, ui_render)
+
+
 def ui_controller():
     global last_key
     key = last_key
     last_key = None # Consume input
     return key
+
+def ai_controller():
+    global ai_key
+    return ai_key
 
 # Separate functions to get direction and then return input
 def on_key(event):
@@ -85,5 +109,5 @@ def on_key(event):
 
 # Calls on_key to save last_key
 root.bind('<Key>', on_key)
-runner.game_loop_id = runner.gameplay(ui_render, ui_controller, root)
+runner.game_loop_id = runner.gameplay(ui_render, ai_controller, root)
 root.mainloop()
