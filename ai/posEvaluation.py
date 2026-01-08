@@ -5,17 +5,18 @@ def posEval(table):
     # Assign desired corner to bottom left
     desiredPos = [3, 0]
     biggestTilePos = [0, 0]
-    biggestTile = 0
+    biggestTile = -float('inf')
 
     weightScore = []
     weightEval = 0
 
+    emptyTiles = False
     # Multiplicator for weight eval on each tile
     weighedTable = [
-        [4, 2, 1, 0],
-        [8, 4, 2, 1],
-        [16, 8, 4, 2],
-        [32, 16, 8, 4]
+        [1.4, 1.2, 1.1, 1],
+        [1.8, 1.4, 1.2, 1.1],
+        [1.16, 1.8, 1.4, 1.2],
+        [1.32, 1.16, 1.8, 1.4]
     ]
 
 
@@ -31,20 +32,19 @@ def posEval(table):
                     # Use log2 formula to define how many merges away a tile is from its neighbor
                     horizLogFoldChange = abs(log2(table[row][tile]) - (log2(table[row][tile + 1])))
 
-                if horizLogFoldChange >= 6:
-                    evalScore = evalScore - (evalScore / 4)
-                elif horizLogFoldChange >= 3:
-                    evalScore = evalScore - (evalScore / 8)
+                # Decrease incrementally bigger fractions from eval score for big diffs
+                for threshold, divisor in [(6, 2), (4, 6), (2, 8)]:
+                    if threshold >= horizLogFoldChange:
+                        evalScore -= (evalScore / divisor)
 
                 # Repeat check vertically
                 if table[row][tile] and table[row + 1][tile]:
                         # Use log2 formula to define how many merges away a tile is from its neighbor
                         vertLogFoldChange = abs(log2(table[row][tile]) - (log2(table[row + 1][tile])))
-
-                if vertLogFoldChange >= 6:
-                    evalScore = evalScore - (evalScore / 4)
-                elif vertLogFoldChange >= 3:
-                    evalScore = evalScore - (evalScore / 8)
+              
+                for threshold, divisor in [(6, 2), (4, 6), (2, 8)]:
+                    if threshold >= vertLogFoldChange:
+                        evalScore -= (evalScore / divisor)
 
             except IndexError:
                 pass
@@ -58,16 +58,20 @@ def posEval(table):
 
             # Award empty tiles
             if tileData == 0:
-                evalScore = evalScore + (evalScore * 1.05)
+                evalScore += 1.05
+                emptyTiles = True
             
+            # Penalize no empty tiles (too close to a loss)
+            if emptyTiles == False:
+                evalScore -= 0.90
+
             # Award if biggest tile is in bottom left corner
             # TODO address equal values as biggest
-            elif tileData >= biggestTile: 
+            elif tileData >= biggestTile:
                 biggestTile = tileData
                 biggestTilePos = [row, tile]
 
     if biggestTilePos == desiredPos:
-        evalScore *= 2
+        evalScore += (evalScore * 1.32)
 
     return evalScore
-        

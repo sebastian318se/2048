@@ -15,7 +15,9 @@ def gameplay(renderer, controller, root=None):
             renderer()
             
             gamestate.firstTurn = False
-
+            
+        elif gamestate.firstTurnAfterLoss:
+            generation.isCoordAv(True)
         # Get input from current runner
         dirInput = controller()
         if dirInput in ("w","a","s","d"):

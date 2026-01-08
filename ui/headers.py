@@ -21,6 +21,8 @@ def update_score(root, newscore):
        )
     return scorelabel.place(x = 300, y = 100, anchor = "center")
 
+loseLabel = None
+
 def lose_screen(root):
     global loseLabel
     loseLabel = tkinter.Label(

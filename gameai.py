@@ -1,11 +1,6 @@
 from core import gamestate, movement, generation
 from ai import posEvaluation
 
-# TODO:
-"""
-Penalize player loss in eval(if no move is made on MAX node)
-"""
-
 def getEmptyTiles(table):
     emptyTiles = []
     for row, rowData in enumerate(table):
