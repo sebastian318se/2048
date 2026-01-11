@@ -5,7 +5,8 @@ It is based off the popular game [2048](https://play2048.co/), with the implemen
 # Features
 - 2048 game clone  
 - tkinter UI
-- Expectimax AI using heuristics
+- Expectimax AI using heuristics for
+monotonicity, empty tiles, smoothness and weighted evaluation
 
 # Used libraries
 - [NumPy](https://numpy.org/)  
