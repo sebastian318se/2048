@@ -35,10 +35,10 @@ def player_mode_button(root, on_press):
         font = ("Arial", 25, "bold"),
         bg = "navajowhite4",
         fg = "bisque",
-        width = 9, height = 1
+        width = 10, height = 1
     )
 
-    return player_button.place(x = 200, y = 300, anchor = "center")
+    return player_button.place(x = 185, y = 300, anchor = "center")
 
 def ai_mode_button(root, on_press):
     global ai_button
@@ -49,10 +49,10 @@ def ai_mode_button(root, on_press):
         font = ("Arial", 25, "bold"),
         bg = "navajowhite4",
         fg = "bisque",
-        width = 9, height = 1
+        width = 10, height = 1
     )
 
-    return ai_button.place(x = 400, y = 300, anchor = "center")
+    return ai_button.place(x = 415, y = 300, anchor = "center")
 
 def deleter():
     global ai_button

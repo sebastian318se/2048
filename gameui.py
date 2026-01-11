@@ -3,14 +3,6 @@ from ui import headers, control, getgameframe
 from ai import posEvaluation
 import tkinter
 import gameai
-import time
-
-
-"""
-TODO:
-fix refreshing buttons
-tinker with expectimax heuristics
-"""
 
 root = tkinter.Tk()
 
@@ -73,7 +65,7 @@ deleted = False
 def ui_render():
     global deleted
     posEvaluation.posEval(gamestate.table)
-
+    
     control.new_game_button(root, new_game)
     control.exit_game_button(root, exit_game)
 
@@ -100,7 +92,7 @@ def ai_controller():
 
     rootNode = gameai.Node(
         table = gamestate.table.copy(),
-        depth = 5,
+        depth = 8,
         nodeType = "MAX",
         moveDirection = "",
         children = [],
@@ -130,7 +122,7 @@ def ai_controller():
         gamestate.playerLost = True
         ui_render()
     
-    
+
 # Separate functions to get direction and then return input
 def on_key(event):
     global last_key
