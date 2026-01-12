@@ -8,6 +8,9 @@ It is based off the popular game [2048](https://play2048.co/), with the implemen
 - Expectimax AI using heuristics for
 monotonicity, empty tiles, smoothness and weighted evaluation
 
+Screenshot:  
+<img width="752" height="915" alt="image" src="https://github.com/user-attachments/assets/da4d059e-cacb-40cf-93c9-7b20aa5f7723" />
+
 # Used libraries
 - [NumPy](https://numpy.org/)  
 - [Tabulate](https://pypi.org/project/tabulate/)  
