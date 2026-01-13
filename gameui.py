@@ -46,12 +46,16 @@ def ai_mode():
     global mode
     mode = "AI"
     control.deleter()
+    control.new_game_button(root, new_game)
+    control.exit_game_button(root, exit_game)
     get_mode()
 
 def player_mode():
     global mode
     mode = "PLAYER"
     control.deleter()
+    control.new_game_button(root, new_game)
+    control.exit_game_button(root, exit_game)
     get_mode()
 
 headers.game_label(root)
@@ -66,9 +70,6 @@ def ui_render():
     global deleted
     posEvaluation.posEval(gamestate.table)
     
-    control.new_game_button(root, new_game)
-    control.exit_game_button(root, exit_game)
-
     if gamestate.playerLost:
         headers.lose_screen(root)
     
@@ -92,7 +93,7 @@ def ai_controller():
 
     rootNode = gameai.Node(
         table = gamestate.table.copy(),
-        depth = 8,
+        depth = 5,
         nodeType = "MAX",
         moveDirection = "",
         children = [],
